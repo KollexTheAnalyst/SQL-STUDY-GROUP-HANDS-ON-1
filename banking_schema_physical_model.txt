@@ -1,0 +1,76 @@
+-- MySQL Workbench Synchronization
+-- Generated: 2026-03-08 01:03
+-- Model: New Model
+-- Version: 1.0
+-- Project: Name of the project
+-- Author: My PC
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+CREATE SCHEMA IF NOT EXISTS `banking` DEFAULT CHARACTER SET utf8 ;
+
+CREATE TABLE IF NOT EXISTS `banking`.`customers` (
+  `Customer_ID` INT(11) NOT NULL COMMENT 'stores the id of each customer of the bank',
+  `First_Name` VARCHAR(45) NULL DEFAULT NULL COMMENT 'stores the first name of each customerof the bank',
+  `Last_Name` VARCHAR(45) NULL DEFAULT NULL COMMENT 'stores the last name of each customerof the bank',
+  `Email` VARCHAR(45) NULL DEFAULT NULL COMMENT 'stores the email address of each customerof the bank',
+  `Phone` VARCHAR(45) NULL DEFAULT NULL COMMENT 'stores the phone numberof each customerof the bank',
+  `Address` VARCHAR(45) NULL DEFAULT NULL COMMENT 'stores the home/office address of each customerof the bank',
+  `City` VARCHAR(45) NULL DEFAULT NULL COMMENT 'stores the city name, where each customerof the bank resides',
+  `Country` VARCHAR(45) NULL DEFAULT NULL COMMENT 'stores the country name, where each customerof the bank resides',
+  `Created_At` DATE NULL DEFAULT NULL COMMENT 'stores the date in which the customer\'s record was captured',
+  PRIMARY KEY (`Customer_ID`),
+  INDEX `idx_first` (`First_Name` ASC) INVISIBLE,
+  INDEX `idx_last` (`Last_Name` ASC) INVISIBLE,
+  INDEX `idx_city` (`City` ASC) INVISIBLE,
+  INDEX `idx_country` (`Country` ASC) VISIBLE,
+  CONSTRAINT `fk_customers_accounts`
+    FOREIGN KEY (`Customer_ID`)
+    REFERENCES `banking`.`accounts` (`Customer_ID`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE IF NOT EXISTS `banking`.`accounts` (
+  `Customer_ID` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'stores the id of each customer of the bank',
+  `Account_Type` VARCHAR(45) NULL DEFAULT NULL COMMENT 'stores the type of account each customer of the bank operate',
+  `Balance` DECIMAL NULL DEFAULT NULL COMMENT 'stores the amount of money currently in each customer\'s accout',
+  `Status` VARCHAR(10) NULL DEFAULT NULL COMMENT 'stores the status of each customer\'s account',
+  `Created_At` DATE NULL DEFAULT NULL COMMENT 'stores the date in which the customer\'s record was captured',
+  PRIMARY KEY (`Customer_ID`),
+  INDEX `idx_account_type` (`Account_Type` ASC) VISIBLE,
+  INDEX `idx_status` (`Status` ASC) VISIBLE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE IF NOT EXISTS `banking`.`transactions` (
+  `accounts_Customer_ID` INT(11) NOT NULL COMMENT 'stores the id of each customer of the bank',
+  `Transaction_ID` INT(11) NOT NULL AUTO_INCREMENT,
+  `Transaction_Type` VARCHAR(45) NULL DEFAULT NULL COMMENT 'stores the type of transaction each customer of the bank performed',
+  `Amount` DECIMAL NULL DEFAULT NULL COMMENT 'stores the amount of money involved at the time of transaction',
+  `Transaction_Date` DATETIME NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'stores the date and time in which the transaction took place',
+  `Description` VARCHAR(45) NULL DEFAULT NULL COMMENT 'stores the description associated with each of the transaction type',
+  `customers_Customer_ID` INT(11) NOT NULL,
+  PRIMARY KEY (`Transaction_ID`),
+  INDEX `fk_transactions_accounts1_idx` (`accounts_Customer_ID` ASC) VISIBLE,
+  INDEX `fk_transactions_customers1_idx` (`customers_Customer_ID` ASC) VISIBLE,
+  CONSTRAINT `fk_transactions_accounts1`
+    FOREIGN KEY (`accounts_Customer_ID`)
+    REFERENCES `banking`.`accounts` (`Customer_ID`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_transactions_customers1`
+    FOREIGN KEY (`customers_Customer_ID`)
+    REFERENCES `banking`.`customers` (`Customer_ID`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
