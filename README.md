@@ -50,6 +50,10 @@ Customer → Account → Transaction
 
 This relationship structure ensures data integrity and traceability of financial activities.
 
+# ER Diagram
+## This shows the banking system database schema designed
+![image alt](banking_database_er_diagram.jpg)
+
 # SQL Concepts Demonstrated
 ## This project applies several key SQL concepts, including:
 * Table creation using `CREATE TABLE`
