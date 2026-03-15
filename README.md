@@ -76,6 +76,7 @@ This relationship structure ensures data integrity and traceability of financial
 * Analyzing transaction patterns
 
 These queries demonstrate how SQL can be used for operational reporting and financial data analysis.
+[database-queries](https://github.com/KollexTheAnalyst/Simple-Banking-System-Database/blob/main/SQL%20HANDS-ON%20%231.sql)
 
 # Dataset
 ## The project uses a sample dataset that includes:
