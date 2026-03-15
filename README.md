@@ -79,7 +79,7 @@ These queries demonstrate how SQL can be used for operational reporting and fina
 
 # Dataset
 ## The project uses a sample dataset that includes:
-[25–30 customers](Customers Table - Sheet1.csv)
+[customers](Customers Table - Sheet1.csv)
 [40–60 accounts](Accounts Table - Sheet1.csv)
 [100 transactions](Transactions Table - Sheet1.csv)
 
